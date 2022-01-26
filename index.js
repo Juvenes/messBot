@@ -69,8 +69,4 @@ app.get('/webhook', (req, res) => {
       }
     }
   });
-
-
-
-
-[{ sender: { id: '4576184389177701' },recipient: { id: '109863831597771' },timestamp: 1643204978904,message: {mid: 'm_7K5ftSNv4u_zbSSu2RPBn0KmAqFsdxm80d_DF44ojXpDQVYuALfCcfWPAsG5qXoZ-FvqGHy9PorEpoUTFfewng',text: 'test 2'}}]
+console.log('NEW');
