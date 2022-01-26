@@ -162,12 +162,7 @@ function handlePostback(sender_psid, received_postback) {
 
 function callSendAPI(sender_psid, response) {
   // Construct the message body
-  let request_body = {
-    "recipient": {
-      "id": sender_psid
-    },
-    "message": response
-  }
+ 
   
   // Send the HTTP request to the Messenger Platform
   request({
@@ -175,7 +170,7 @@ function callSendAPI(sender_psid, response) {
     //"uri": "http://192.168.0.102:1339/",
     "qs": { "access_token": process.env.PAGE_ACCESS_TOKEN },
     "method": "POST",
-    "json": request_body
+    "json": response
   }, (err, res, body) => {
     if (!err) {
       console.log('message sent!')
@@ -183,4 +178,6 @@ function callSendAPI(sender_psid, response) {
       console.error("Unable to send message:" + err);
     }
   }); 
+
+  console.log(res);
 }
