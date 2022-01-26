@@ -122,11 +122,6 @@ function handleMessage(sender_psid, received_message) {
               },
               {
                 "type": "postback",
-                "title": "Changer % Solde",
-                "payload": "CHANGE_SOLD"
-              },
-              {
-                "type": "postback",
                 "title": "Simulation",
                 "payload": "SIMULATION"
               }
