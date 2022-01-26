@@ -101,7 +101,7 @@ function handleMessage(sender_psid, received_message) {
     // Create the payload for a basic text message
     response = {
       "recipient":{
-        "id": `"${sender_psid}"`
+        "id": `${sender_psid}`
       },
       "message":{
         "attachment":{
