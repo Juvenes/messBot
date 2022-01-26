@@ -1,4 +1,11 @@
 'use strict';
+
+//const copain = ['4576184389177701'];
+//function test(id) {
+  //mmas = false;
+ /// copain.forEach(el  =>  id===el ? mmas = true : mmas = false )
+///}
+
 const
   express = require('express'),
   bodyParser = require('body-parser'),
@@ -12,7 +19,8 @@ app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 app.post('/webhook', (req, res) => {  
  
     let body = req.body;
-  
+    console.log(body);
+
     // Checks this is an event from a page subscription
     if (body.object === 'page') {
   
@@ -61,3 +69,8 @@ app.get('/webhook', (req, res) => {
       }
     }
   });
+
+
+
+
+[{ sender: { id: '4576184389177701' },recipient: { id: '109863831597771' },timestamp: 1643204978904,message: {mid: 'm_7K5ftSNv4u_zbSSu2RPBn0KmAqFsdxm80d_DF44ojXpDQVYuALfCcfWPAsG5qXoZ-FvqGHy9PorEpoUTFfewng',text: 'test 2'}}]
