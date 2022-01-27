@@ -1,5 +1,4 @@
 'use strict';
-
 var Person = function (_name,_id) {
   this.name = _name;
   this.id = _id;
@@ -95,15 +94,10 @@ function handleMessage(sender_psid, received_message) {
   let response;
   let name_res = getname(sender_psid);
   // Check if the message contains text
-  if (received_message.text) {    
+  if ((received_message.text ==="Salut" || received_message.text ==="yo" ||received_message.text ==="salut" || received_message.text ==="reset")) {    
     
-
     // Create the payload for a basic text message
     response = {
-      "recipient":{
-        "id": `${sender_psid}`
-      },
-      "message":{
         "attachment":{
           "type":"template",
           "payload":{
@@ -123,49 +117,112 @@ function handleMessage(sender_psid, received_message) {
               {
                 "type": "postback",
                 "title": "Simulation",
-                "payload": "SIMULATION"
+                "payload": "SIMUL"
               }
             ]
           }
         }
       }
-    }
-  }  
-  
+     
   // Sends the response message
   callSendAPI(sender_psid, response);
-
+  }  
 }
 
 // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
-  let response;
-  
   // Get the payload for the postback
   let payload = received_postback.payload;
-
   // Set the response based on the postback payload
-  if (payload === 'yes') {
-    response = { "text": "Thanks!" }
-  } else if (payload === 'no') {
-    response = { "text": "Oops, try sending another image." }
+  if (payload === 'SOLD_CHECK') {
+    handleSolde(sender_psid);
+  } else if (payload === 'MY_HISTORY') {
+    handleHistorique(sender_psid);
+  } else if (payload === 'SIMUL') {
+    handleSimul(sender_psid);
   }
-  // Send the message to acknowledge the postback
+}
+
+function handleHistorique(sender_psid){
+  let response;
+  let name_res = getname(sender_psid);
+  response = {
+    "recipient":{
+      "id": `${sender_psid}`
+    },
+    "message":{
+    }
+  }
+  callSendAPI(sender_psid, response);
+}
+
+
+function handleSolde(sender_psid){
+  let response;
+  let name_res = getname(sender_psid);
+
+  callSendAPI(sender_psid, response);
+}
+
+function handleSimul(sender_psid){
+  let response;
+
+  response = {
+    "text": "Quel coins veux-tu simuler ?",
+    "quick_replies":[
+      {
+        "content_type":"text",
+        "title":"BTC/USD",
+        "payload":"BTC",
+        "image_url":"https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/1024/Bitcoin-BTC-icon.png"
+      },{
+        "content_type":"text",
+        "title":"AVAX/USD",
+        "payload":"AVAX",
+        "image_url":"https://uxwing.com/wp-content/themes/uxwing/download/10-brands-and-social-media/avalanche-avax.png"
+      },{
+        "content_type":"text",
+        "title":"CHZ/USD",
+        "payload":"CHZ",
+        "image_url":"https://s2.coinmarketcap.com/static/img/coins/200x200/4066.png"
+      },{
+        "content_type":"text",
+        "title":"LINK/USD",
+        "payload":"LINK",
+        "image_url":"https://cdn-icons-png.flaticon.com/512/189/189688.png"
+      },{
+        "content_type":"text",
+        "title":"FTM/USD",
+        "payload":"FTM",
+        "image_url":"https://icoholder.com/files/img/14d6c55d8f4100303ab82e62baf21b83.png"
+      },{
+        "content_type":"text",
+        "title":"MANA/USD",
+        "payload":"MANA",
+        "image_url":"https://s2.coinmarketcap.com/static/img/coins/200x200/1966.png"
+      }
+    ]
+  }
   callSendAPI(sender_psid, response);
 }
 
 
 function callSendAPI(sender_psid, response) {
-  // Construct the message body
- 
-  
+  // Construct the message body 
+
+  let request_body = {
+    "recipient": {
+      "id": sender_psid
+    },
+    "message": response
+  }
   // Send the HTTP request to the Messenger Platform
   request({
     "uri": "https://graph.facebook.com/v2.6/me/messages",
     //"uri": "http://192.168.0.102:1339/",
     "qs": { "access_token": process.env.PAGE_ACCESS_TOKEN },
     "method": "POST",
-    "json": response
+    "json": request_body
   }, (err, res, body) => {
     if (!err) {
       console.log('message sent!')
