@@ -157,7 +157,7 @@ function handlePostback(sender_psid, received_postback) {
     handleHistorique(sender_psid);
   } else if (payload === 'SIMUL') {
     handleSimul(sender_psid);
-  }else if (payload === 'BULlRUN' || payload === 'CRASHRUN' || payload === 'NORMAL'){
+  }else if (payload === 'BULLRUN' || payload === 'CRASHRUN' || payload === 'NORMAL'){
     handlePeriod(sender_psid,payload);
   }else if (payload === 'TRIX'){
     handleTrix(sender_psid,payload);
@@ -175,7 +175,7 @@ function handleTrix(sender_psid,payload){
       {
         "content_type":"text",
         "title":"Bullrun",
-        "payload":"BULlRUN",
+        "payload":"BULLRUN",
         "image_url":"https://previews.123rf.com/images/asmati/asmati1602/asmati160203127/52184892-growing-signe-de-fl%C3%A8che-flat-ic%C3%B4ne-de-style-sur-fond-transparent.jpg"
       },{
         "content_type":"text",
@@ -190,7 +190,7 @@ function handleTrix(sender_psid,payload){
       }
     ]
   }
- 
+  callSendAPI(sender_psid, response);
 }
 
 
