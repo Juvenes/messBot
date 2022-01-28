@@ -112,7 +112,7 @@ function handleMessage(sender_psid, received_message) {
   let person = getname(sender_psid);
   // Check if the message contains text
   if (received_message.quick_reply){
-    handleQuick(sender_psid, received_message);
+    handleQuick(sender_psid, received_message.quick_reply);
   }
   else{
     if ((received_message.text ==="Salut" || received_message.text ==="yo" ||received_message.text ==="salut" || received_message.text ==="reset")) {    
@@ -150,7 +150,6 @@ function handleMessage(sender_psid, received_message) {
   }
 }
 function handleQuick(sender_psid, quick_reply){
-  console.log("RENTRE IN QUICK")
   let payload = quick_reply.payload;
   if (payload === 'BULLRUN' || payload === 'CRASHRUN' || payload === 'NORMAL'){
     handlePeriod(sender_psid,payload);
