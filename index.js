@@ -169,6 +169,7 @@ function handleTrix(sender_psid,payload){
   let response;
   let bro =getname(sender_psid);
   bro.addChoice(payload)
+  console.log("Ici zebii ")
   response = {
     "text": "Sur Quel type de perdiods veut-tu tester la simulation ?",
     "quick_replies":[
@@ -190,6 +191,7 @@ function handleTrix(sender_psid,payload){
       }
     ]
   }
+  console.log("Envoyed ")
   callSendAPI(sender_psid, response);
 }
 
