@@ -63,6 +63,9 @@ app.post('/webhook', (req, res) => {
          else if (webhook_event.postback) {
           handlePostback(webhook_event.sender.id, webhook_event.postback);
           }
+          else if (webhook_event.quick_reply){
+            handleQuick(webhook_event.sender.id, webhook_event.postback);
+          }
       
         }
         //else
@@ -145,25 +148,28 @@ function handleMessage(sender_psid, received_message) {
   callSendAPI(sender_psid, response);
   }  
 }
-
-// Handles messaging_postbacks events
-function handlePostback(sender_psid, received_postback) {
-  // Get the payload for the postback
-  let payload = received_postback.payload;
-  // Set the response based on the postback payload
-  if (payload === 'SOLD_CHECK') {
-    handleSolde(sender_psid);ù
-  } else if (payload === 'MY_HISTORY') {
-    handleHistorique(sender_psid);
-  } else if (payload === 'SIMUL') {
-    handleSimul(sender_psid);
-  }else if (payload === 'BULLRUN' || payload === 'CRASHRUN' || payload === 'NORMAL'){
+function handleQuick(sender_psid, quick_reply){
+  let payload = quick_reply.payload;
+  if (payload === 'BULLRUN' || payload === 'CRASHRUN' || payload === 'NORMAL'){
     handlePeriod(sender_psid,payload);
   }else if (payload === 'TRIX'){
     console.log("ALORS ? ")
     handleTrix(sender_psid,payload);
   }else if (payload === 'BTCUSDT'|| payload === 'AVAXUSDT'||payload === 'CHZUSDT'||payload === 'LINKUSDT'||payload === 'FTMUSDT'||payload === 'MANAUSDT'||payload === 'XPRUSDT'){
     handleCoins(sender_psid,payload);
+  }
+}
+// Handles messaging_postbacks events
+function handlePostback(sender_psid, received_postback) {
+  // Get the payload for the postback
+  let payload = received_postback.payload;
+  // Set the response based on the postback payload
+  if (payload === 'SOLD_CHECK') {
+    handleSolde(sender_psid);
+  } else if (payload === 'MY_HISTORY') {
+    handleHistorique(sender_psid);
+  } else if (payload === 'SIMUL') {
+    handleSimul(sender_psid);
   }
 }
 function handleTrix(sender_psid,payload){
