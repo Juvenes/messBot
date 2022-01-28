@@ -160,16 +160,19 @@ function handlePostback(sender_psid, received_postback) {
   }else if (payload === 'BULLRUN' || payload === 'CRASHRUN' || payload === 'NORMAL'){
     handlePeriod(sender_psid,payload);
   }else if (payload === 'TRIX'){
+    console.log("ALORS ? ")
     handleTrix(sender_psid,payload);
   }else if (payload === 'BTCUSDT'|| payload === 'AVAXUSDT'||payload === 'CHZUSDT'||payload === 'LINKUSDT'||payload === 'FTMUSDT'||payload === 'MANAUSDT'||payload === 'XPRUSDT'){
     handleCoins(sender_psid,payload);
   }
 }
 function handleTrix(sender_psid,payload){
+  console.log("lazebii ")
   let response;
+  console.log("Ici zebii ")
   let bro =getname(sender_psid);
   bro.addChoice(payload)
-  console.log("Ici zebii ")
+ 
   response = {
     "text": "Sur Quel type de perdiods veut-tu tester la simulation ?",
     "quick_replies":[
@@ -280,7 +283,6 @@ function handleCoins(sender_psid,payload){
 //CALL FOR ALL 
 function callSendAPI(sender_psid, response) {
   // Construct the message body 
-
   let request_body = {
     "recipient": {
       "id": sender_psid
