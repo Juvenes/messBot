@@ -57,16 +57,12 @@ app.post('/webhook', (req, res) => {
         let webhook_event = entry.messaging[0];
         console.log(webhook_event);
         if(getname(webhook_event.sender.id) !== undefined){
-          if (webhook_event.message) {
+          if (webhook_event.message ) {
             handleMessage(webhook_event.sender.id, webhook_event.message);
           }
          else if (webhook_event.postback) {
           handlePostback(webhook_event.sender.id, webhook_event.postback);
           }
-          else if (webhook_event.quick_reply){
-            handleQuick(webhook_event.sender.id, webhook_event.quick_reply);
-          }
-      
         }
         //else
       });
@@ -115,40 +111,46 @@ function handleMessage(sender_psid, received_message) {
   let response;
   let person = getname(sender_psid);
   // Check if the message contains text
-  if ((received_message.text ==="Salut" || received_message.text ==="yo" ||received_message.text ==="salut" || received_message.text ==="reset")) {    
-    // Create the payload for a basic text message
-    response = {
-        "attachment":{
-          "type":"template",
-          "payload":{
-            "template_type":"button",
-            "text":`Salut ${person.name},que veux-tu faire ?`,
-            "buttons":[
-              {
-                "type": "postback",
-                "title": "Mon solde",
-                "payload": "SOLD_CHECK"
-              },
-              {
-                "type": "postback",
-                "title": "Mon historique",
-                "payload": "MY_HISTORY"
-              },
-              {
-                "type": "postback",
-                "title": "Simulation",
-                "payload": "SIMUL"
-              }
-            ]
+  if (received_message.quick_reply){
+    handleQuick(sender_psid, received_message);
+  }
+  else{
+    if ((received_message.text ==="Salut" || received_message.text ==="yo" ||received_message.text ==="salut" || received_message.text ==="reset")) {    
+      // Create the payload for a basic text message
+      response = {
+          "attachment":{
+            "type":"template",
+            "payload":{
+              "template_type":"button",
+              "text":`Salut ${person.name},que veux-tu faire ?`,
+              "buttons":[
+                {
+                  "type": "postback",
+                  "title": "Mon solde",
+                  "payload": "SOLD_CHECK"
+                },
+                {
+                  "type": "postback",
+                  "title": "Mon historique",
+                  "payload": "MY_HISTORY"
+                },
+                {
+                  "type": "postback",
+                  "title": "Simulation",
+                  "payload": "SIMUL"
+                }
+              ]
+            }
           }
         }
-      }
-     
-  // Sends the response message
-  callSendAPI(sender_psid, response);
-  }  
+      
+    // Sends the response message
+    callSendAPI(sender_psid, response);
+    }  
+  }
 }
 function handleQuick(sender_psid, quick_reply){
+  console.log("RENTRE IN QUICK")
   let payload = quick_reply.payload;
   if (payload === 'BULLRUN' || payload === 'CRASHRUN' || payload === 'NORMAL'){
     handlePeriod(sender_psid,payload);
