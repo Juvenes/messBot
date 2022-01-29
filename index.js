@@ -37,13 +37,7 @@ const
   app = express().use(bodyParser.json()); // creates express http server
 
 // Sets server port and logs message on success
-app.listen(process.env.PORT || 1337, () =>{
-  console.log('webhook is listening');
-  let bro = getname("123456789")
-  bro.addChoice("TRIX");
-  bro.addChoice("BULLRUN");
-  bro.addChoice("BTCUSDT");
-  call_python("123456789")});
+app.listen(process.env.PORT || 1337, () =>console.log('webhook is listening'));
 
 
 // Creates the endpoint for our webhook 
@@ -347,16 +341,15 @@ function call_python (sender_psid) {
   const promise = new Promise((resolve,reject)=>{
     const {spawn}= require("child_process");
     console.log("Lancement python")
-    const pypro =spawn('python', ["vavav.py","BTCUSDT","BULLRUN", "TRIX"]);
+    const pypro =spawn('python', ["vavav.py",bro.choices[2],bro.choices[1], bro.choices[0]]);
     pypro.stdout.on('data', (data)=> {
       resolve(data.toString());
   })
   pypro.stderr.pipe(process.stderr);
   }).then(value=> {
-    console.log(value);
     response = {"text": value};
     bro.resetChoice();
-    //callSendAPI(sender_psid, response);
+    callSendAPI(sender_psid, response);
     
   }).catch(err=> {
     response = value
