@@ -353,9 +353,10 @@ function call_python (sender_psid) {
   })
   pypro.stderr.pipe(process.stderr);
   }).then(value=> {
+    console.log(value);
     response = {"text": value};
     bro.resetChoice();
-    callSendAPI(sender_psid, response);
+    //callSendAPI(sender_psid, response);
     
   }).catch(err=> {
     response = value
