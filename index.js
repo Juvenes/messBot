@@ -345,12 +345,13 @@ function call_python (sender_psid) {
   let bro = getname(sender_psid);
   let response;
   const promise = new Promise((resolve,reject)=>{
-    const {execSync}= require("child_process").execSync;
+    const {spawn}= require("child_process");
     console.log("Lancement python")
-    let ap = "python vavav.py " + bro.choices[2] +" "+bro.choices[1]+" "+bro.choices[0];
-    console.log(ap);
-    const result =execSync(ap);
-    resolve(result.toString());
+    const pypro =spawn('python', ["vavav.py","BTCUSDT","BULLRUN", "TRIX"]);
+    pypro.stdout.on('data', (data)=> {
+      resolve(data.toString());
+  })
+  pypro.stderr.pipe(process.stderr);
   }).then(value=> {
     response = {"text": value};
     bro.resetChoice();
