@@ -362,7 +362,7 @@ function call_python (sender_psid) {
 const promise = new Promise((resolve,reject)=>{
   const {spawn}= require("child_process");
   console.log("Lancement python")
-  const pypro =spawn('python', ["vavav.py","BTCUSDT","BULLRUN", "TRIX"]);
+  const pypro =spawn('python3', ["vavav.py","BTCUSDT","BULLRUN", "TRIX"]);
   pypro.stdout.on('data', (data)=> {
     resolve(data.toString());
 })
