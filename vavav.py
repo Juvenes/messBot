@@ -1,10 +1,10 @@
+from binance.client import Client
 import pandas as pd
 import ta
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
 import warnings
-from binance.client import Client
 warnings.filterwarnings("ignore")
 
 
