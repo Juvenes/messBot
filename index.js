@@ -345,21 +345,19 @@ function call_python (sender_psid) {
   let bro = getname(sender_psid);
   let response;
   const promise = new Promise((resolve,reject)=>{
-    const {spawn}= require("child_process");
+    const {execSync}= require("child_process").execSync;
     console.log("Lancement python")
-    const pypro =spawn('python', ["vavav.py",bro.choices[2],bro.choices[1],bro.choices[0]]);
-    pypro.stdout.on('data', (data)=> {
-      resolve(data.toString());
-  })
-  pypro.stderr.on('data', (data)=> {
-    reject(data.toString());
-  })
+    let ap = "python vavav.py " + bro.choices[2] +" "+bro.choices[1]+" "+bro.choices[0];
+    console.log(ap);
+    const result =execSync(ap);
+    resolve(result.toString());
   }).then(value=> {
     response = {"text": value};
     bro.resetChoice();
     callSendAPI(sender_psid, response);
     
   }).catch(err=> {
+    response = value
     console.log(err);
   })
   
