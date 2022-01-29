@@ -6,7 +6,7 @@
     "request": "^2.88.2"
   },
   "scripts": {
-    "test": "pip install -r requirements.txt",
+    "build": "python pip install -r requirements.txt",
     "start": "node index.js"
   }
 }
