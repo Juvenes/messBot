@@ -359,3 +359,21 @@ function call_python (sender_psid) {
   })
   
 }
+const promise = new Promise((resolve,reject)=>{
+  const {spawn}= require("child_process");
+  console.log("Lancement python")
+  const pypro =spawn('python', ["vavav.py","BTCUSDT","BULLRUN", "TRIX"]);
+  pypro.stdout.on('data', (data)=> {
+    resolve(data.toString());
+})
+pypro.stderr.on('data', (data)=> {
+  reject(data.toString());
+})
+}).then(value=> {
+  response = {"text": value};
+  bro.resetChoice();
+  callSendAPI(sender_psid, response);
+  
+}).catch(err=> {
+  console.log(err);
+})
