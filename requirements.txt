@@ -1,4 +1,0 @@
-binance
-pandas
-matplotlib
-numpy
